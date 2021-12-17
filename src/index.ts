@@ -1,5 +1,5 @@
 import { Plugin, Transformer } from 'unified';
-import { visit } from "unist-util-visit";
+import visit from "unist-util-visit";
 import { Code } from "mdast";
 import fetch from 'node-fetch';
 
@@ -32,7 +32,7 @@ export type PluginOptons = {
 const plugin: Plugin<PluginOptons[]> = (options = {}) => {
   const transformer: Transformer = async (tree, file) => {
     const codes: Code[] = [];
-    visit(tree, 'code', (node) => {
+    visit(tree, 'code', (node: Code) => {
       codes.push(node);
     });
 
@@ -55,15 +55,13 @@ const plugin: Plugin<PluginOptons[]> = (options = {}) => {
 
       const rawUrl = res.groups.rawUrl;
       const fromLine = res.groups.from
-        ? parseInt(res.groups.from, 10)
+        ? Number.parseInt(res.groups.from, 10)
         : undefined;
       const hasDash = !!res.groups.dash || fromLine === undefined;
       const toLine = res.groups.to ? Number.parseInt(res.groups.to, 10) : undefined;
-      const url = new URL(rawUrl);
-      const response = await fetch(url.href);
+      const response = await fetch(rawUrl);
       const fileContent = await response.text();
       
-      //node.value = fileContent;
       node.value = extractLines(
         fileContent,
         fromLine,
@@ -71,6 +69,8 @@ const plugin: Plugin<PluginOptons[]> = (options = {}) => {
         toLine,
         options.preserveTrailingNewline
       );
+      // FIX: warn unable to find prism language
+      node.meta = undefined;
     }
   };
   return transformer;
