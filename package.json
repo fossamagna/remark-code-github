@@ -24,7 +24,7 @@
   "author": "fossamagna",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "27.4.0",
+    "@types/jest": "27.5.2",
     "@types/node-fetch": "2.6.6",
     "jest": "27.5.1",
     "remark": "13.0.0",
