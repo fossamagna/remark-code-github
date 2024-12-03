@@ -35,7 +35,7 @@
     "vfile-reporter": "8.1.1"
   },
   "dependencies": {
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^3.0.0",
     "unist-util-visit": "^2.0.0"
   }
 }
