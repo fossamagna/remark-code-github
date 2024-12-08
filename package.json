@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.6",
-    "unist-util-visit": "^2.0.0"
+    "unist-util-visit": "^4.0.0"
   }
 }
