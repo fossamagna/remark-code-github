@@ -1,6 +1,6 @@
 {
   "name": "remark-code-github",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Populate code blocks from GitHub",
   "type": "module",
   "main": "./lib/cjs/index.js",
