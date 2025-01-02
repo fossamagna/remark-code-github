@@ -1,7 +1,7 @@
-import { Plugin, Transformer } from 'unified';
-import visit from "unist-util-visit";
+import { Plugin, Transformer } from "unified";
+import { visit } from "unist-util-visit";
 import { Code } from "mdast";
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 function extractLines(
   content: string,
@@ -17,37 +17,38 @@ function extractLines(
     end = start;
   } else if (toLine) {
     end = toLine;
-  } else if (lines[lines.length - 1] === '' && !preserveTrailingNewline) {
+  } else if (lines[lines.length - 1] === "" && !preserveTrailingNewline) {
     end = lines.length - 1;
   } else {
     end = lines.length;
   }
-  return lines.slice(start - 1, end).join('\n');
+  return lines.slice(start - 1, end).join("\n");
 }
 
 export type PluginOptons = {
   preserveTrailingNewline?: boolean;
-}
+};
 
 const plugin: Plugin<PluginOptons[]> = (options = {}) => {
   const transformer: Transformer = async (tree, file) => {
     const codes: Code[] = [];
-    visit(tree, 'code', (node: Code) => {
+    visit(tree, "code", (node: Code) => {
       codes.push(node);
     });
 
     for (const node of codes) {
-      const codeMeta = (node.meta || '')
-      .split(' ')
-      .find(meta => meta.startsWith('raw_url='));
+      const codeMeta = (node.meta || "")
+        .split(" ")
+        .find((meta) => meta.startsWith("raw_url="));
 
       if (!codeMeta) {
         continue;
       }
 
-      const res = /^raw_url=(?<rawUrl>.+?)(?:(?:#(?:L(?<from>\d+)(?<dash>-)?)?)(?:L(?<to>\d+))?)?$/.exec(
-        codeMeta
-      );
+      const res =
+        /^raw_url=(?<rawUrl>.+?)(?:(?:#(?:L(?<from>\d+)(?<dash>-)?)?)(?:L(?<to>\d+))?)?$/.exec(
+          codeMeta
+        );
 
       if (!res || !res.groups || !res.groups.rawUrl) {
         throw new Error(`Unable to parse raw url path ${codeMeta}`);
@@ -58,10 +59,12 @@ const plugin: Plugin<PluginOptons[]> = (options = {}) => {
         ? Number.parseInt(res.groups.from, 10)
         : undefined;
       const hasDash = !!res.groups.dash || fromLine === undefined;
-      const toLine = res.groups.to ? Number.parseInt(res.groups.to, 10) : undefined;
+      const toLine = res.groups.to
+        ? Number.parseInt(res.groups.to, 10)
+        : undefined;
       const response = await fetch(rawUrl);
       const fileContent = await response.text();
-      
+
       node.value = extractLines(
         fileContent,
         fromLine,

@@ -2,15 +2,27 @@
   "name": "remark-code-github",
   "version": "0.1.0",
   "description": "Populate code blocks from GitHub",
-  "main": "./lib/index.js",
+  "type": "module",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "lib/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js",
+      "types": "./lib/esm/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fossamagna/remark-code-import.git"
   },
   "scripts": {
     "prebuild": "rimraf ./lib",
-    "build": "tsc",
-    "test": "jest"
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "test": "vitest --exclude lib"
   },
   "keywords": [
     "remark",
@@ -24,18 +36,16 @@
   "author": "fossamagna",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "29.5.14",
     "@types/node-fetch": "2.6.12",
-    "jest": "29.7.0",
-    "remark": "13.0.0",
+    "remark": "15.0.1",
     "rimraf": "6.0.1",
     "to-vfile": "8.0.0",
-    "ts-jest": "29.2.5",
     "typescript": "5.7.2",
-    "vfile-reporter": "8.1.1"
+    "vfile-reporter": "8.1.1",
+    "vitest": "^2.1.8"
   },
   "dependencies": {
     "node-fetch": "^2.6.6",
-    "unist-util-visit": "^2.0.0"
+    "unist-util-visit": "^5.0.0"
   }
 }
