@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fossamagna/remark-code-import.git"
+    "url": "git+https://github.com/fossamagna/remark-code-github.git"
   },
   "scripts": {
     "prebuild": "rimraf ./lib",
