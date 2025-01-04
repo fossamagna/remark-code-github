@@ -1,6 +1,6 @@
-import { Plugin, Transformer } from "unified";
+import type { Plugin, Transformer } from "unified";
+import type { Code, Root } from "mdast";
 import { visit } from "unist-util-visit";
-import { Code } from "mdast";
 import fetch from "node-fetch";
 
 function extractLines(
@@ -29,8 +29,8 @@ export type PluginOptons = {
   preserveTrailingNewline?: boolean;
 };
 
-const plugin: Plugin<PluginOptons[]> = (options = {}) => {
-  const transformer: Transformer = async (tree, file) => {
+const plugin: Plugin<PluginOptons[], Root> = (options = {}) => {
+  const transformer: Transformer<Root> = async (tree, file) => {
     const codes: Code[] = [];
     visit(tree, "code", (node: Code) => {
       codes.push(node);
