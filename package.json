@@ -40,7 +40,7 @@
     "remark": "15.0.1",
     "rimraf": "6.0.1",
     "to-vfile": "8.0.0",
-    "typescript": "5.9.2",
+    "typescript": "5.9.3",
     "vfile-reporter": "8.1.1",
     "vitest": "^3.0.0"
   },
