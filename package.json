@@ -42,7 +42,7 @@
     "to-vfile": "8.0.0",
     "typescript": "5.9.3",
     "vfile-reporter": "8.1.1",
-    "vitest": "^3.0.0"
+    "vitest": "^4.0.0"
   },
   "dependencies": {
     "node-fetch": "^3.0.0",
