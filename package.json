@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/node-fetch": "2.6.13",
     "remark": "15.0.1",
-    "rimraf": "6.1.0",
+    "rimraf": "6.1.2",
     "to-vfile": "8.0.0",
     "typescript": "5.9.3",
     "vfile-reporter": "8.1.1",
